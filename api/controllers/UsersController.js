@@ -1,0 +1,140 @@
+/**
+ * UsersController
+ *
+ * @description :: Server-side actions for handling incoming requests.
+ * @help        :: See https://sailsjs.com/docs/concepts/actions
+ */
+
+module.exports = {
+    sendMail: async(req, res) => {
+        await sails.helpers.mailer();
+        res.status(200);
+    },
+    getUsers: async (req, res) => {
+        // Do nothing
+    /*
+    {
+        "createdAt": 1576876866110,
+        "updatedAt": 1576876911120,
+        "id": 27,
+        "name": "Troy Jantz",
+        "birthdate": null,
+        "email": "jantzt@hotmail.com",
+        "usertype": null,
+        "password": "QWerty79",
+        "encryptedPassword": "$2b$10$.fOke7veOAWR69cvGoB3u.snMwRe5jCqiky0d/eJ77zWywoAdbE7C",
+        "team": "35"
+      */
+      },
+    users: async (req, res) => {
+        let users = Users.find({select: ['createdAt', 'updatedAt','id','name','birthdate']})
+    },
+    create: async (req, res) => {
+		const data = req.allParams();
+
+		let userCheck = await Users.findOne({ email: data.email });
+		if (userCheck) { 
+			return res.send({'message':'already a user'}) 
+		}
+        if (data.password !== data.confirmPassword) return res.badRequest("Password not the same");
+
+        let user = await Users.create({
+                email: data.email,
+                password: data.password,
+				name: data.name,
+				usertype: data.usertype
+			}).fetch()
+			.catch((err) => {
+                sails.log.error(err);
+                return res.serverError("Something went wrong");
+            });
+
+		res.send({ token: jwToken.issue({ id: user.id }), 'userid': user.id }); // payload is { id: user.id}
+          
+            
+    },
+
+    login(req, res) {
+        const data = req.allParams();
+		let email = data.email;
+		let password = data.password;
+        console.log("Data Provided: ", data);
+        if (!data.email || !data.password) return res.badRequest('Email and password required');
+
+        Users.findOne({ email: email })
+            .then((user) => {
+                console.log("USER: ", user);
+                if (!user) return res.notFound();
+                
+                Users.comparePassword(password, user.encryptedPassword)
+                    .then(() => {
+                        // put the token and user together to pass them to the next promise
+                        const tokenUser = [{ token: jwToken.issue({ id: user.id }) }, user];
+                        return tokenUser;
+                    })
+                    .then(async (tokenUser) => {
+
+                        // get the team from the user and send it back with the token
+                        let user = tokenUser[1];
+                        let token = tokenUser[0];
+                        let team = await Teams.findOne({id: user.team});
+                        if (!team || team == 'null'){
+                            team = '';
+                        }
+                        let sendBody = {'token':token, 'team':team, 'userid': user.id}
+                        return res.status(200).send(sendBody);
+                    })
+
+                    .catch((err) => {
+                        return res.forbidden();
+                    });
+                    
+
+                
+            })
+            .catch((err) => {
+                sails.log.error(err);
+                return res.serverError();
+            });
+    },
+	getWrestlers: async function(req, res) {
+	},
+	getCoaches: async function(req, res){
+        let usersList = await Users.find().sort('createdAt DESC').limit(30);
+        var newTeamArr = [];
+        for (let x = 0; x < usersList.length; x++){
+            let coach = usersList[x];
+            let team = await Teams.find({id: coach.team});
+            team = (team ? team : '');
+            if (team.length > 0){
+                teamInfo = {
+                    'createdAt': coach.createdAt,
+                    'name': coach.name,
+                    'usertype': coach.usertype,
+                    'email': coach.email,
+                    'password': coach.password,
+                    'teamSet': 1,
+                    'teamName': (team[0].name ? team[0].name : ''),
+                    'location': (team[0].city ? team[0].city : '') + "," + (team[0].state ? team[0].state : '')
+                };
+            } else {
+                teamInfo = {
+                    'createdAt': coach.createdAt,
+                    'name': coach.name,
+                    'email': coach.email,
+                    'password': coach.password,
+                    'teamSet': 0,
+                    'teamName': '',
+                    'location': ''
+                };
+            }
+            newTeamArr.push(teamInfo);
+        }
+        //console.log("New Users: ", newTeamArr);
+        res.status(200).send(newTeamArr);
+	},
+	getTeam: async function(req, res) {
+	},
+
+};
+
