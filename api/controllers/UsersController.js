@@ -13,12 +13,12 @@ module.exports = {
     locations: async (req, res) => {
         console.log("Testing Locations")
         let data = req.allParams();
-        if (data.x == undefined || data.y == undefined){
+        if (data['x'] == undefined || data['y'] == undefined){
             let x = 33.1810386;
             let y = -117.3498951;
         } else {
-            let x = data.x;
-            let y = data.y;
+            let x = data['x'];
+            let y = data['y'];
         }
         // get distance between to points
         const client = await new googleMapsClient.directions({

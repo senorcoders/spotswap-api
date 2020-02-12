@@ -24,7 +24,7 @@ module.exports.routes = {
   'post /users/': 'Users/create',
   'post /users/login': 'Users/login',
   'post /users/locations': 'Users/locations',
-  'post /api/v1/getnearby': 'Users/getNearby',
+  'get /api/v1/getnearby': 'Users/getNearby',
   'get /api/sendmail/': 'Users/sendMail',
   
 
