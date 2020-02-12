@@ -5,7 +5,64 @@
  * @help        :: See https://sailsjs.com/docs/concepts/actions
  */
 
+const googleMapsClient = require('@google/maps').createClient({
+    key: 'AIzaSyBZdlt2VGdA75yuLThTAU-PE7vaxiKtOLo' // Google Key is for Directions only
+  });
+
 module.exports = {
+    locations: async (req, res) => {
+        console.log("Testing Locations")
+        let data = req.allParams();
+        if (data.x == undefined || data.y == undefined){
+            let x = 33.1810386;
+            let y = -117.3498951;
+        } else {
+            let x = data.x;
+            let y = data.y;
+        }
+        // get distance between to points
+        const client = await new googleMapsClient.directions({
+            origin: x + "," + y,
+            destination: "1 Infinite Loop, Cupertino, CA 95014, USA",
+            mode: "driving",
+        }, function(err, response) {
+            console.log(err);
+            //console.log(response);
+            
+              if (!err) { 
+                res.send(response);
+              };
+        });
+
+        
+        //console.log("Client: ", client);
+
+
+
+    },
+    getNearby: async(req, res) => {
+        let data = req.allParams();
+        console.log("Data X: ", data['x'])
+        
+
+        if (data['x'] == undefined || data['y'] == undefined){
+            x = 33.1810386;
+            y = -117.3498951;
+            distance = .25;
+        } else {
+            x = data['x'];
+            y = data['y'];
+            distance = .25;
+        }
+
+        let pt1X = x-0.0004000;
+        let pt1Y = y-0.0002000;
+        console.log("Coords: ", x, y, distance, pt1X, pt1Y);
+        nearbyPts = [{'x': pt1X, 'y': pt1Y}];
+        res.send(nearbyPts);
+        // Go to parking locations table to get current locations that are nearby
+        // 
+    },
     sendMail: async(req, res) => {
         await sails.helpers.mailer();
         res.status(200);

@@ -20,35 +20,11 @@ module.exports.routes = {
   ***************************************************************************/
 
   '/': { view: 'pages/homepage' },
-  //'post /matches': 'Matches/create',
   'get /users': 'Users/getUsers', // Dont return anything for this route
-  'get /api/weights': 'Wrestlers/getWeights',
-  'delete /matches': 'Matches/delete',
-	'get /api/:teamid/wrestlers/': 'Users/getWrestlers',
-	'get /api/:teamid/coaches/': 'Users/getCoaches',
-  'get /api/:teamid/team/': 'Users/getTeam',
-  'post /api/teams/create': 'Teams/createTeam',
   'post /users/': 'Users/create',
   'post /users/login': 'Users/login',
-  'get /api/meets/:teamid': 'Meets/getTeamMeets', // Get Meets by teamid
-  'post /api/wrestlers/': 'Wrestlers/createWrestler',
-  'get /api/wrestlers/:teamid': 'Wrestlers/getWrestlersByTeam', // Get wrestlers names and id
-  'get /api/wrestlersfull/:teamid': 'Wrestlers/getFullWrestlers', // Get wrestlers and all columns
-  'get /api/wrestlers/detail/:wrestlerid': 'Wrestlers/getDetail', // get wrestler details and stats
-  'delete /api/wrestlers/delete/:wrestlerid': 'Wrestlers/deleteWrestler',
-  'post /api/saveScore/': 'Matches/saveScore',
-  'get /api/matchscore/:matchid/': 'Matchscore/getMatchScore',
-  'get /api/getmatch/:matchid/': 'Matches/getMatch',
-  'get /api/getteammatches/:teamid/': 'Matches/getTeamMatches',
-  'get /api/getteammatches/:teamid/:pageNum/:num': 'Matches/getTeamMatches',
-  'get /api/getqueuedmatches/:teamid/:pageNum/:num': 'Matches/getQueuedMatches',
-  'get /api/getwrestlermatches/:wrestlerid/': 'Matches/getWrestlerMatches',
-  'get /api/getlatestmatches/:teamid/': 'Matches/getLatestTeamMatches',
-  'post /api/updatescore/:pointid': 'Matchscore/updateScore',
-  'post /api/deletescore/:pointid': 'Matchscore/deleteScore',
-  'delete /api/match/deletelast/:matchid': 'Matchscore/deleteLast',
-  'delete /api/deletematch/:matchid': 'Matches/deleteMatch',
-  'get /api/analytics/latestusers/': 'Users/getCoaches',
+  'post /users/locations': 'Users/locations',
+  'post /api/v1/getnearby': 'Users/getNearby',
   'get /api/sendmail/': 'Users/sendMail',
   
 

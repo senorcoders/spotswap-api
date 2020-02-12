@@ -47,8 +47,8 @@ module.exports = {
     *                                                                          *
     ***************************************************************************/
     default: {
-      adapter: 'sails-mysql',
-      url: 'mysql://root:helium@matsidestats.com/matsidestatsdev',
+      adapter: 'sails-mongo',
+      url: 'mongodb://spotswapadmin:d0A!ght2Q@138.68.19.227:27017/spotswap',
       //--------------------------------------------------------------------------
       //  /\   To avoid checking it in to version control, you might opt to set
       //  ||   sensitive credentials like `url` using an environment variable.
@@ -339,7 +339,7 @@ module.exports = {
   * this, just try deploying without setting it and see if it works.)       *
   *                                                                         *
   ***************************************************************************/
-  port: 1338,
+  port: 1340,
 
 
 
