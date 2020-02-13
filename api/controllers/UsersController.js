@@ -84,7 +84,7 @@ module.exports = {
       */
       },
     users: async (req, res) => {
-        let users = Users.find({select: ['createdAt', 'updatedAt','id','name','birthdate']})
+        let users = await Users.find({select: ['createdAt', 'updatedAt','id','name','birthdate']})
     },
     create: async (req, res) => {
 		const data = req.allParams();
