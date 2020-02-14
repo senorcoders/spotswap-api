@@ -26,6 +26,8 @@ module.exports.routes = {
   'post /users/locations': 'Users/locations',
   'get /api/v1/getnearby': 'Users/getNearby',
   'get /api/sendmail/': 'Users/sendMail',
+
+  'POST /api/setlocation': 'Locations/setLocation',
   
 
   /***************************************************************************
