@@ -12,9 +12,9 @@ module.exports = {
     //  ╔═╗╦═╗╦╔╦╗╦╔╦╗╦╦  ╦╔═╗╔═╗
     //  ╠═╝╠╦╝║║║║║ ║ ║╚╗╔╝║╣ ╚═╗
     //  ╩  ╩╚═╩╩ ╩╩ ╩ ╩ ╚╝ ╚═╝╚═╝
-	
-		userid: {
-			model: 'Users'
+
+    userid: {
+      model: 'Users'
     },
     lat: {
       type: 'number'
@@ -34,6 +34,9 @@ module.exports = {
     //  ╩ ╩╚═╝╚═╝╚═╝╚═╝╩╩ ╩ ╩ ╩╚═╝╝╚╝╚═╝
 
   },
-
+  afterCreate: function(entry, cb) {
+    sails.sockets.broadcast('locations', 'new_location', entry);
+    cb();
+  }
 };
 

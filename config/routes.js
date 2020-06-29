@@ -30,6 +30,8 @@ module.exports.routes = {
   'POST /api/setlocation': 'Locations/setLocation',
   
 
+  'get /location/subscribe': 'Locations/subscribe',
+
   /***************************************************************************
   *                                                                          *
   * More custom routes here...                                               *
