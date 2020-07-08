@@ -35,6 +35,12 @@ module.exports.routes = {
 
 
   'get /location/subscribe': 'Locations/subscribe',
+  'get /message/subscribe': 'Messages/subscribe',
+
+  'POST /api/message': 'Messages/addMessage',
+  'POST /api/getmessages': 'Messages/getMessages'
+
+
 
   /***************************************************************************
   *                                                                          *

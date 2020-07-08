@@ -35,14 +35,15 @@ module.exports = {
 
     return res.ok();
   },
-  pushLocation: async(req, res) => {
+  pushLocation: async(req, res) => {  
     let data = req.allParams();
     let userid = data.userid;
     let lat = data.lat;
     let long = data.long;
     let msg = data.msg;
+    let email = data.email;
 
-    let loc = await Locations.create({userid: userid, lat: lat, long: long, msg: msg}).fetch();
+    let loc = await Locations.create({userid: userid, lat: lat, long: long, msg: msg, email:email}).fetch();
     res.status(200).send(loc);
   }
 

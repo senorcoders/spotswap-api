@@ -24,6 +24,9 @@ module.exports = {
     },
     msg: {
       type: 'string'
+    },
+    email: {
+      type: 'string'
     }
 
 

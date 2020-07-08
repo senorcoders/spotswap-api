@@ -9,6 +9,15 @@ module.exports = {
 
   attributes: {
 
+    sender: {
+			type: 'string'
+    },
+    receiver: {
+      type: 'string'
+    },
+    message: {
+      type: 'string'
+    }
     //  ╔═╗╦═╗╦╔╦╗╦╔╦╗╦╦  ╦╔═╗╔═╗
     //  ╠═╝╠╦╝║║║║║ ║ ║╚╗╔╝║╣ ╚═╗
     //  ╩  ╩╚═╩╩ ╩╩ ╩ ╩ ╚╝ ╚═╝╚═╝
@@ -24,6 +33,10 @@ module.exports = {
     //  ╩ ╩╚═╝╚═╝╚═╝╚═╝╩╩ ╩ ╩ ╩╚═╝╝╚╝╚═╝
 
   },
+  afterCreate: function(entry, cb) {
+    sails.sockets.broadcast('messages', 'new_message', entry);
+    cb();
+  }
 
 };
 
