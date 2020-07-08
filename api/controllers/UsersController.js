@@ -48,7 +48,7 @@ module.exports = {
         if (data['x'] == undefined || data['y'] == undefined){
             x = 33.1810386;
             y = -117.3498951;
-            distance = .25;
+            distance = .25; 
         } else {
             x = data['x'];
             y = data['y'];
@@ -109,6 +109,37 @@ module.exports = {
 		res.send({ token: jwToken.issue({ id: user.id }), 'userid': user.id }); // payload is { id: user.id}
           
             
+    },
+
+    update: async(req, res) => {
+        const data = req.allParams();
+        let updatedUser = await Users.updateOne({ email: data.email })
+        .set({
+            name: data.name,
+            birthdate: data.birthdate,
+            email: data.email,        
+        });
+
+        if (updatedUser) {
+            sails.log('Updated the user named "Pen" so that their new name is "Finn".');
+            return res.send({'updated': true});
+          }
+          else {
+            sails.log('The database does not contain a user named "Pen".');
+            return res.send({'updated': false});
+
+          }
+
+
+    },
+
+
+    getSingleUser: async(req, res) => {
+        const data = req.allParams();
+        let user = await Users.findOne({ email: data.email });
+        return res.status(200).send(user);
+
+
     },
 
     login(req, res) {

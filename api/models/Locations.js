@@ -21,6 +21,9 @@ module.exports = {
     },
     long: {
       type: 'number'
+    },
+    msg: {
+      type: 'string'
     }
 
 

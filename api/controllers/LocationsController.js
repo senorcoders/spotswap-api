@@ -5,6 +5,7 @@
  * @help        :: See https://sailsjs.com/docs/concepts/actions
  */
 
+
 module.exports = {
 
   setLocation: async(req, res) => {
@@ -27,12 +28,22 @@ module.exports = {
   },
   subscribe: function(req, res) {
     if( ! req.isSocket) {
-      return res.badRequest();
+      return res.badRequest(); 
     }
 
     sails.sockets.join(req.socket, 'locations');
 
     return res.ok();
+  },
+  pushLocation: async(req, res) => {
+    let data = req.allParams();
+    let userid = data.userid;
+    let lat = data.lat;
+    let long = data.long;
+    let msg = data.msg;
+
+    let loc = await Locations.create({userid: userid, lat: lat, long: long, msg: msg}).fetch();
+    res.status(200).send(loc);
   }
 
 };

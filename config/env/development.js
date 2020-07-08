@@ -48,8 +48,7 @@ module.exports = {
     ***************************************************************************/
     default: {
       adapter: 'sails-mongo',
-      // url: 'mongodb://root@localhost/spotswap',
-      url: 'mongodb://spotswapadmin:829F29Liq@138.68.19.227:27017/spotswapadmin',
+      url: 'mongodb://root@localhost/spotswap',
 
       //--------------------------------------------------------------------------
       //  /\   To avoid checking it in to version control, you might opt to set

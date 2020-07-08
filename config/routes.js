@@ -28,7 +28,11 @@ module.exports.routes = {
   'get /api/sendmail/': 'Users/sendMail',
 
   'POST /api/setlocation': 'Locations/setLocation',
-  
+  'POST /api/addparking': 'Locations/pushLocation',
+  'PATCH /updateuser': 'Users/update',
+  'POST /singleuser': 'Users/getSingleUser',
+
+
 
   'get /location/subscribe': 'Locations/subscribe',
 
