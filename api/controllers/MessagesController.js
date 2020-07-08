@@ -28,9 +28,22 @@ module.exports = {
       getMessages: async(req, res) => {
         let data = req.allParams();
 
-        let msgs = await Users.find({ receiver: data.receiver, sender: data.sender });
+        let msgs = await Messages.find({ receiver: data.receiver, sender: data.sender });
         res.status(200).send(msgs);
       },
+
+      getReceivedMessages:async(req, res) =>{
+        let data = req.allParams();
+
+        let msgs = await Messages.find({ receiver: data.receiver });
+        res.status(200).send(msgs);
+      },
+      getSentMessages:async(req, res) =>{
+        let data = req.allParams();
+
+        let msgs = await Messages.find({ sender: data.sender });
+        res.status(200).send(msgs);
+      }
      
 
 };
