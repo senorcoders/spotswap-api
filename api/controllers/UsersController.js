@@ -59,7 +59,8 @@ module.exports = {
         let pt1Y = y-0.0002000;
         console.log("Coords: ", x, y, distance, pt1X, pt1Y);
         nearbyPts = [{'x': pt1X, 'y': pt1Y}];
-        res.send(nearbyPts);
+        let locations = await Locations.find({});
+        res.send(locations);
         // Go to parking locations table to get current locations that are nearby
         // 
     },
